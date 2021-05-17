@@ -1,10 +1,12 @@
 .model tiny
-.86
+.286
 .data
-;DATA
+;;DATA;;
 .code
 .startup
-;CODE
+lea	ax, stckPtr
+mov	sp, ax
+;;CODE;;
 .exit
-;PROCS
+;;PROCS;;
 end

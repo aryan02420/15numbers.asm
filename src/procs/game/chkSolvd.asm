@@ -10,7 +10,7 @@ chkSolvd proc near
 	mov	cl, gSize	; cl = 16
 	dec	cl		; cl = 15
 	lea	bp, gState	; bp = [0]
-	add	bp, cl		; bp = [15]
+	add	bp, cx		; bp = [15]
 
 cs_x2:	cmp	cl, [bp]	; 15 == [15] ?
 	jne	cs_x1
