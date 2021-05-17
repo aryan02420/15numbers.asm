@@ -71,3 +71,8 @@ function post() {
 }
 
 exports.default = gulp.series(compile, inject)
+exports.watch = function() {
+  gulp.watch('./src/procs/**/*.asm', gulp.series(compileProcs, inject))
+  gulp.watch('./src/data/**/*.asm', gulp.series(compileData, inject))
+  gulp.watch('./src/code/**/*.asm', gulp.series(compileCode, inject))
+}

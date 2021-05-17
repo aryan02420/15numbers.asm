@@ -1,7 +1,6 @@
 	call	filBoard
 	call	setDispM
 
-
 m_l1:	call	drawGrid
 	call	getKey
 ; 	cmp	al, 'w'
