@@ -1,6 +1,6 @@
 ; INPUT
 ; ah:al = col:row
-setCursr proc near
+proc near
 	push	dx
 	push	bx
 
@@ -13,4 +13,4 @@ setCursr proc near
 	pop	bx
 	pop	dx
 	ret
-setCursr endp
+endp

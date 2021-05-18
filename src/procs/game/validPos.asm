@@ -8,12 +8,12 @@
 ; lhs is always true
 ; 0 <= col < width
 ; 0 <= row < height
-validPos proc near
+proc near
 	stc
 	cmp	ah, gWidth
-	jge	vp_x1
+	jge	@x1
 	cmp	al, gHeight
-	jge	vp_x1
+	jge	@x1
 	clc
-vp_x1:	ret
-validPos endp
+@x1:	ret
+endp

@@ -1,4 +1,4 @@
-setDispM proc near
+proc near
 	mov	ah, 0fh
 	int	10h
 	mov	oDispM, al
@@ -6,4 +6,4 @@ setDispM proc near
 	mov	al, 00h
 	int	10h
 	ret
-setDispM endp
+endp

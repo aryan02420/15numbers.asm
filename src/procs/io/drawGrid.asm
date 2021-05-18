@@ -1,8 +1,5 @@
-drawGrid proc near
-	push	ax
-	push	dx
-	push	si
-	push	di
+proc near
+	pusha
 
 	mov	ax, 0			; ax = 0	; index
 	mov	cx, gSize
@@ -20,9 +17,6 @@ drawGrid proc near
 	mov	al, 25
 	call	setCursr		; move cursor outside screen to hide
 
-	pop	di
-	pop	si
-	pop	dx
-	pop	ax
+	popa
 	ret
-drawGrid endp
+endp

@@ -4,7 +4,7 @@
 ; ah:al = 0:index
 ; LOGIC
 ; index = col + width*row
-posToIdx proc near
+proc near
 	push	cx
 	push	bx
 	mov	cl, gWidth
@@ -14,4 +14,4 @@ posToIdx proc near
 	pop	bx
 	pop	cx
 	ret
-posToIdx endp
+endp

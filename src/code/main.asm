@@ -1,27 +1,27 @@
 	call	filBoard
 	call	setDispM
 
-m_l1:	call	drawGrid
+@l1:	call	drawGrid
 	call	getKey
-; 	cmp	al, 'w'
-; 	je	m_m1
-; 	cmp	al, 'a'
-; 	je	m_m2
-; 	cmp	al, 's'
-; 	je	m_m3
-; 	cmp	al, 'd'
-; 	je	m_m4
-	cmp	al, 'q'
-	je	m_e1
-	jmp	m_l1
+	cmp	al, 'w'
+	je	@m1
+	cmp	al, 'a'
+	je	@m2
+	cmp	al, 's'
+	je	@m3
+	cmp	al, 'd'
+	je	@m4
+	cmp	al, 'Q'
+	je	@e1
+	jmp	@l1
 
-; m_m1:	;call	moveUp
-; 	jmp	m_l1
-; m_m2:	;call	moveLt
-; 	jmp	m_l1
-; m_m3:	;call	moveDn
-; 	jmp	m_l1
-; m_m4:	;call	moveRt
-; 	jmp	m_l1
+@m1:	;call	moveUp
+	jmp	@l1
+@m2:	;call	moveLt
+	jmp	@l1
+@m3:	;call	moveDn
+	jmp	@l1
+@m4:	;call	moveRt
+	jmp	@l1
 
-m_e1:	call	resDispM
+@e1:	call	resDispM

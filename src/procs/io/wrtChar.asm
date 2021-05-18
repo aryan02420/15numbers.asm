@@ -1,7 +1,7 @@
 ; INPUT
 ; al = char
 ; bl = attr
-wrtChar proc near
+proc near
 	push	ax
 	push	bx
 	push	cx
@@ -15,4 +15,4 @@ wrtChar proc near
 	pop	bx
 	pop	ax
 	ret
-wrtChar endp
+endp

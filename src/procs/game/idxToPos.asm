@@ -5,10 +5,10 @@
 ; LOGIC
 ; col = index % width
 ; row = index // width
-idxToPos proc near
+proc near
 	push	bx
 	mov	bl, gWidth
 	div	bl
 	pop	bx
 	ret
-idxToPos endp
+endp

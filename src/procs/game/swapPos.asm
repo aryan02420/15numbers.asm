@@ -3,7 +3,7 @@
 ; bh:bl = col:row = x1:y1
 ; OUTPUT
 ; ah:al = col:row = x0+x1:y0+y1
-swapPos proc near
+proc near
 	push	dx
 	push	si
 	push	di
@@ -26,4 +26,4 @@ swapPos proc near
 	pop	si
 	pop	dx
 	ret
-swapPos endp
+endp
