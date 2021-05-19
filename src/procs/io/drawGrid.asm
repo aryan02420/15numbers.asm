@@ -2,7 +2,7 @@ proc near
 	pusha
 
 	mov	ax, 0			; ax = 0	; index
-	mov	cx, gSize
+	mov	cx, word ptr [gSize]
 	dec	cx			; cx = 15	; empty value and total blocks
 
 	lea	si, gState		; si = [0]

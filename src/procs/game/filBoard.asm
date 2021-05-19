@@ -4,7 +4,7 @@ proc near
 	push	ax
 
 	; fill gState
-	mov	di, gSize
+	mov	di, word ptr [gSize]
 	dec	di
 	lea	bp, gState
 @l1:	mov	ax, di
@@ -14,9 +14,9 @@ proc near
 	jge	@l1
 
 	; set empty block
-	mov	ah, gWidth
+	mov	ah, byte ptr [gWidth]
 	dec	ah
-	mov	al, gHeight
+	mov	al, byte ptr [gHeight]
 	dec	al
 	mov	word ptr [gEmpty], ax
 

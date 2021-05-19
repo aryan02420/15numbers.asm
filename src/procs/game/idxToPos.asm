@@ -7,7 +7,7 @@
 ; row = index // width
 proc near
 	push	bx
-	mov	bl, gWidth
+	mov	bl, byte ptr [gWidth]
 	div	bl
 	pop	bx
 	ret

@@ -16,7 +16,7 @@ function transformLabels(file, enc, callback) {
 
 function completeProc(file, enc, callback) {
   let contents = file.contents.toString()
-  contents = contents.replace(/^(proc|endp)/gm, `${file.stem} $1`)
+  contents = contents.replace(/^\s*(proc|endp)/gm, `${file.stem} $1`)
   file.contents = Buffer.from(contents)
   callback(null, file)
 }
@@ -35,6 +35,16 @@ function correctPushPop(file, enc, callback) {
     return kw+s.replace(/\,/g, `\n${kw} `)
   })
   file.contents = Buffer.from(contents)
+  callback(null, file)
+}
+
+function correctSyntax(file, enc, callback) {
+  // transformLabels
+  // correctPushPop
+  // = assignment
+  // +=
+  // -=
+  // procName() => call procName 
   callback(null, file)
 }
 
@@ -68,86 +78,42 @@ let compile = gulp.parallel(compileCode, compileData, compileProcs)
 
 function inject() {
   return gulp.src('template.asm')
-    .pipe(
-      replace({
-        patterns: [
-          {
-            match: /;;DATA;;/g,
-            replacement: fs.readFileSync('./tmp/data.asm', 'utf8')
-          }
-        ]
-      })
-    )
-    .pipe(
-      replace({
-        patterns: [
-          {
-            match: /;;CODE;;/g,
-            replacement: fs.readFileSync('./tmp/code.asm', 'utf8')
-          }
-        ]
-      })
-    )
-    .pipe(
-      replace({
-        patterns: [
-          {
-            match: /;;PROCS;;/g,
-            replacement: fs.readFileSync('./tmp/procs.asm', 'utf8')
-          }
-        ]
-      })
-    )
-    .pipe(
-      replace({
-        patterns: [
-          {
-            match: /\s*;.*$/gm, // remove comments
-            replacement: ''
-          }
-        ]
-      })
-    )
-    .pipe(
-      replace({
-        patterns: [
-          {
-            match: /\n{2,}/g, // remove extra newlines
-            replacement: '\n'
-          }
-        ]
-      })
-    )
-    .pipe(
-      replace({
-        patterns: [
-          {
-            match: /^\s/gm, // remove leading space
-            replacement: ''
-          }
-        ]
-      })
-    )
-    .pipe(
-      replace({
-        patterns: [
-          {
-            match: /\t+/g, // remove tabs
-            replacement: ' '
-          }
-        ]
-      })
-    )
-    .pipe(
-      replace({
-        patterns: [
-          {
-            match: /[ ]{2,}/g, // remove extra spaces
-            replacement: ' '
-          }
-        ]
-      })
-    )
+    .pipe(replace({patterns: [{
+      match: /;;DATA;;/g,
+      replacement: fs.readFileSync('./tmp/data.asm', 'utf8')
+    }]}))
+    .pipe(replace({patterns: [{
+      match: /;;CODE;;/g,
+      replacement: fs.readFileSync('./tmp/code.asm', 'utf8')
+    }]}))
+    .pipe(replace({patterns: [{
+      match: /;;PROCS;;/g,
+      replacement: fs.readFileSync('./tmp/procs.asm', 'utf8')
+    }]}))
+    .pipe(replace({patterns: [{
+      match: /\s*;.*$/gm, // remove comments
+      replacement: ''
+    }]}))
+    .pipe(replace({patterns: [{
+      match: /:/g, // split labels
+      replacement: ':\n'
+    }]}))
+    .pipe(replace({patterns: [{
+      match: /\n{2,}/g, // remove extra newlines
+      replacement: '\n'
+    }]}))
+    .pipe(replace({patterns: [{
+      match: /^\s/gm, // remove leading space
+      replacement: ''
+    }]}))
+    .pipe(replace({patterns: [{
+      match: /\t+/g, // remove tabs
+      replacement: ' '
+    }]}))
+    .pipe(replace({patterns: [{
+      match: /[ ]{2,}/g, // remove extra spaces
+      replacement: ' '
+    }]}))
     .pipe(rename('15num.asm'))
     .pipe(gulp.dest('./build'))
 }

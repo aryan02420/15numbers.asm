@@ -13,13 +13,13 @@ proc near
 	cmp	ah, 0
 	jl	@err
 
-	cmp	ah, gWidth
+	cmp	ah, byte ptr [gWidth]
 	jge	@err
 
 	cmp	al, 0
 	jl	@err
 
-	cmp	al, gHeight
+	cmp	al, byte ptr [gHeight]
 	jge	@err
 
 	inc	cx			; cx = 1, ok

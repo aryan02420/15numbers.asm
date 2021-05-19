@@ -7,7 +7,7 @@
 proc near
 	push	cx
 	push	bx
-	mov	cl, gWidth
+	mov	cl, byte ptr [gWidth]
 	mov	bl, ah
 	mul	cl
 	add	al, bl

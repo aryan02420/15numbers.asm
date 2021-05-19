@@ -12,15 +12,15 @@ proc near
 
 	mov	cx, FALSE			; not solved
 
-	mov	ah, gWidth
-	mov	al, gHeight
+	mov	ah, byte ptr [gWidth]
+	mov	al, byte ptr [gHeight]
 	dec	ah
 	dec	al
 	mov	bx, word ptr [gEmpty]
 	cmp	ax, bx
 	jne	@end
 
-	mov	bx, gSize			; counter
+	mov	bx, word ptr [gSize]		; counter
 	dec	bx				; bx = 15
 	lea	bp, gState
 	add	bp, bx				; gState[15]
