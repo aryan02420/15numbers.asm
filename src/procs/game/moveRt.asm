@@ -1,6 +1,6 @@
 proc near
 	pusha
-	mov	bx, DirDn
+	mov	bx, DirRt
 	call	moveDir
 	popa
 	ret

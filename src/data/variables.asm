@@ -1,13 +1,13 @@
-gWidth	db	4
-gHeight	db	4
-gSize	dw	16
-gEmpty	db	1,1		; row:col => little endian
-gMoves	dw	0
-gState	db	64 dup (0)
+gWidth	db	?
+gHeight	db	?
+gSize	dw	?
+gEmpty	db	2 dup (?)		; row:col => little endian
+gMoves	db	4 dup (?)		; sparse BCD ; 1089 = 0x 01 00 08 09
+gState	db	64 dup (?)
 gSymb	db	'123456789ABCDEFG'
 	db	'HIJKLMNOPQRSTUVW'
 	db	'XYZabcdefghijklm'
 	db	'nopqrstuvwxyz{} '
-nums	db	'0123456789'
+gDebug	db	?
 
-oDispM	db	0
+oDispM	db	?
