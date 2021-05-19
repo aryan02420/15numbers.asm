@@ -1,8 +1,7 @@
 ; INPUT
 ; ah:al = col:row
 proc near
-	push	dx
-	push	bx
+	pusha
 
 	mov	dh, al		; row
 	mov	dl, ah		; col
@@ -10,7 +9,6 @@ proc near
 	mov	ah, 02h
 	int	10h
 
-	pop	bx
-	pop	dx
+	popa
 	ret
 endp

@@ -1,24 +1,39 @@
-; OUTPUT
-; solved, CF = 0
-; not solved, CF = 1
+; OUTPUT================================
+; solved, CX = 1/TRUE
+; not solved, CX = 0/FALSE
+
+; LOGIC=================================
+; empty is at last pos, CX=0/FALSE
+; 0 TO 15 in wrong order, CX=0/FALSE
+; else CX=1/TRUE
+
 proc near
-	push	cx
-	push	bp
+	push	ax, bx, bp
 
-	stc
-	xor	cx, cx
-	mov	cl, gSize	; cl = 16
-	dec	cl		; cl = 15
-	lea	bp, gState	; bp = [0]
-	add	bp, cx		; bp = [15]
+	mov	cx, FALSE			; not solved
 
-@x2:	cmp	cl, [bp]	; 15 == [15] ?
-	jne	@x1
-	dec	bp		; bp = [14]
-	dec	cl
-	jo	@x2		; cl = 14
+	mov	ah, gWidth
+	mov	al, gHeight
+	dec	ah
+	dec	al
+	mov	bx, word ptr [gEmpty]
+	cmp	ax, bx
+	jne	@end
 
-@x1:	pop	bp
-	pop	cx
+	mov	bx, gSize			; counter
+	dec	bx				; bx = 15
+	lea	bp, gState
+	add	bp, bx				; gState[15]
+
+@loop1:	cmp	bl, byte ptr [bp]		; 15 == gState[15] ?
+	jne	@end
+	dec	bp
+	dec	bl
+	cmp	bl, 0
+	jge	@loop1
+
+	mov	cx, TRUE
+
+@end:	pop	bp, bx, ax
 	ret
 endp

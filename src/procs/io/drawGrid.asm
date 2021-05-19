@@ -8,6 +8,8 @@ proc near
 	lea	si, gState		; si = [0]
 	lea	di, gSymb		; di = [0]
 
+
+	mov	bl, 00011111b		; bg = Blue 	; fg = bWhite
 @l1:	call	drawBloc		; ax = index
 	inc	ax
 	cmp	ax, cx

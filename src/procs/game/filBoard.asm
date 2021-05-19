@@ -3,6 +3,7 @@ proc near
 	push	bp
 	push	ax
 
+	; fill gState
 	mov	di, gSize
 	dec	di
 	lea	bp, gState
@@ -11,6 +12,14 @@ proc near
 	dec	di
 	cmp	di, 0
 	jge	@l1
+
+	; set empty block
+	mov	ah, gWidth
+	dec	ah
+	mov	al, gHeight
+	dec	al
+	mov	word ptr [gEmpty], ax
+
 
 	pop	ax
 	pop	bp

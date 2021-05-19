@@ -1,19 +1,28 @@
 ; INPUT
 ; ah:al = col:row = x:y
 ; OUTPUT
-; if valid, CF = 0
-; if invalid CF = 1
+; if invalid, CX = 0
+; if valid CX = 1
 ; LOGIC
-; assuming unsigned integer
-; lhs is always true
+; assuming signed integer
 ; 0 <= col < width
 ; 0 <= row < height
 proc near
-	stc
+	xor	cx, cx			; cx = 0, error
+
+	cmp	ah, 0
+	jl	@err
+
 	cmp	ah, gWidth
-	jge	@x1
+	jge	@err
+
+	cmp	al, 0
+	jl	@err
+
 	cmp	al, gHeight
-	jge	@x1
-	clc
-@x1:	ret
+	jge	@err
+
+	inc	cx			; cx = 1, ok
+
+@err:	ret
 endp

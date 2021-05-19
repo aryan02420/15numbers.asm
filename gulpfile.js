@@ -21,6 +21,23 @@ function completeProc(file, enc, callback) {
   callback(null, file)
 }
 
+function correctPushPop(file, enc, callback) {
+  /*
+   * INPUT
+   * push ax, bx,cx
+   * OUTPUT
+   * push ax
+   * push bx
+   * push cx
+   */
+  let contents = file.contents.toString()
+  contents = contents.replace(/(push|pop)(.*)/g, (_, kw, s) => {
+    return kw+s.replace(/\,/g, `\n${kw} `)
+  })
+  file.contents = Buffer.from(contents)
+  callback(null, file)
+}
+
 function pre(done) {
   return gulp.src('./build/', {read: false})
     .pipe(clean())
@@ -41,6 +58,7 @@ function compileCode() {
 function compileProcs() {
   return gulp.src('./src/procs/**/*.asm')
     .pipe(through2.obj(completeProc))
+    .pipe(through2.obj(correctPushPop))
     .pipe(through2.obj(transformLabels))
     .pipe(concat({path: 'procs.asm'}))
     .pipe(gulp.dest('./tmp'))
@@ -84,7 +102,7 @@ function inject() {
       replace({
         patterns: [
           {
-            match: /;.*$/gm,
+            match: /\s*;.*$/gm, // remove comments
             replacement: ''
           }
         ]
@@ -94,8 +112,38 @@ function inject() {
       replace({
         patterns: [
           {
-            match: /\n{2,}/g,
+            match: /\n{2,}/g, // remove extra newlines
             replacement: '\n'
+          }
+        ]
+      })
+    )
+    .pipe(
+      replace({
+        patterns: [
+          {
+            match: /^\s/gm, // remove leading space
+            replacement: ''
+          }
+        ]
+      })
+    )
+    .pipe(
+      replace({
+        patterns: [
+          {
+            match: /\t+/g, // remove tabs
+            replacement: ' '
+          }
+        ]
+      })
+    )
+    .pipe(
+      replace({
+        patterns: [
+          {
+            match: /[ ]{2,}/g, // remove extra spaces
+            replacement: ' '
           }
         ]
       })
@@ -111,7 +159,8 @@ function post() {
 
 exports.default = gulp.series(compile, inject)
 exports.watch = function() {
-  gulp.watch('./src/procs/**/*.asm', { ignoreInitial: false }, gulp.series(compileProcs, inject))
-  gulp.watch('./src/data/**/*.asm', { ignoreInitial: false }, gulp.series(compileData, inject))
-  gulp.watch('./src/code/**/*.asm', { ignoreInitial: false }, gulp.series(compileCode, inject))
+  gulp.watch('./src/procs/**/*.asm', { ignoreInitial: true }, gulp.series(compileProcs))
+  gulp.watch('./src/data/**/*.asm', { ignoreInitial: true }, gulp.series(compileData))
+  gulp.watch('./src/code/**/*.asm', { ignoreInitial: true }, gulp.series(compileCode))
+  gulp.watch('./tmp/**/*.asm', { ignoreInitial: false }, gulp.series(inject))
 }
