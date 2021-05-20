@@ -1,7 +1,7 @@
 proc near
 	pusha
-	mov	bx, DirUp
-	call	moveDir
+	bx = DirUp
+	moveDir()
 	popa
 	ret
 endp

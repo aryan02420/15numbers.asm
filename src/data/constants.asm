@@ -3,8 +3,8 @@ FALSE	equ	0
 
 GMinW	equ	2
 GMinH	equ	2
-GMaxW	equ	2
-GMaxH	equ	2
+GMaxW	equ	8
+GMaxH	equ	8
 
 GDefW	equ	4
 GDefH	equ	4

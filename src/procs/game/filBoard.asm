@@ -1,28 +1,23 @@
 proc near
-	push	di
-	push	bp
-	push	ax
+	push	di, bp, ax
 
 	; fill gState
-	mov	di, word ptr [gSize]
-	dec	di
+	di = word ptr [gSize]
+	di--
 	lea	bp, gState
-@l1:	mov	ax, di
-	mov	[bp+di], al
-	dec	di
+@l1:	ax = di
+	[bp + di] = al
+	di--
 	cmp	di, 0
 	jge	@l1
 
 	; set empty block
-	mov	ah, byte ptr [gWidth]
-	dec	ah
-	mov	al, byte ptr [gHeight]
-	dec	al
-	mov	word ptr [gEmpty], ax
+	ah = byte ptr [gWidth]
+	ah--
+	al = byte ptr [gHeight]
+	al--
+	word ptr [gEmpty] = ax
 
 
-	pop	ax
-	pop	bp
-	pop	di
+	pop	ax, bp, di
 	ret
-endp

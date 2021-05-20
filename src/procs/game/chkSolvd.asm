@@ -10,29 +10,29 @@
 proc near
 	push	ax, bx, bp
 
-	mov	cx, FALSE			; not solved
+	cx = FALSE				; not solved
 
-	mov	ah, byte ptr [gWidth]
-	mov	al, byte ptr [gHeight]
-	dec	ah
-	dec	al
-	mov	bx, word ptr [gEmpty]
+	ah = byte ptr [gWidth]
+	al = byte ptr [gHeight]
+	ah--
+	al--
+	bx = word ptr [gEmpty]
 	cmp	ax, bx
 	jne	@end
 
-	mov	bx, word ptr [gSize]		; counter
-	dec	bx				; bx = 15
+	bx = word ptr [gSize]			; counter
+	bx--					; bx = 15
 	lea	bp, gState
-	add	bp, bx				; gState[15]
+	bp += bx				; gState[15]
 
 @loop1:	cmp	bl, byte ptr [bp]		; 15 == gState[15] ?
 	jne	@end
-	dec	bp
-	dec	bl
+	bp--
+	bl--
 	cmp	bl, 0
 	jge	@loop1
 
-	mov	cx, TRUE
+	cx = TRUE
 
 @end:	pop	bp, bx, ax
 	ret

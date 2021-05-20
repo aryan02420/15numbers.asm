@@ -2,25 +2,25 @@ proc near
 	pusha
 
 	; write empty pos
-	mov	bl, 01000111b		; bg = Red 	; fg = White
-	mov	ax, 0006h
-	call	setCursr
-	mov	al, byte ptr [gEmpty+1]	; col
-	or	al, 30h			; num to ascii
-	call	wrtChar
-	mov	ax, 0106h
-	call	setCursr
-	mov	al, byte ptr [gEmpty]	; row
-	or	al, 30h			; num to ascii
-	call	wrtChar
+	bl = 01000111b			; bg = Red 	; fg = White
+	ax = 0006h
+	setCursr()
+	al = byte ptr [gEmpty+1]	; col
+	al = 30h			; num to ascii
+	wrtChar()
+	ax = 0106h
+	setCursr()
+	al = byte ptr [gEmpty]		; row
+	al |= 30h			; num to ascii
+	wrtChar()
 
 	; write moves
-	mov	bl, 01010111b		; bg = Blue 	; fg = White
-	mov	ax, 0306h
-	call	setCursr
-	mov	al, byte ptr [gMoves]	; col
-	or	al, 30h			; num to ascii
-	call	wrtChar
+	bl = 01010111b			; bg = Blue 	; fg = White
+	ax = 0306h
+	setCursr()
+	al = byte ptr [gMoves]		; col
+	al |= 30h			; num to ascii
+	wrtChar()
 
 	popa
 	ret
