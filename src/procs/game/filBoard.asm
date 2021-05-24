@@ -21,3 +21,5 @@ proc near
 
 	pop	ax, bp, di
 	ret
+
+endp

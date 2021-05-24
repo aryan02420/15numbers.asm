@@ -18,12 +18,13 @@ proc near
 	al--
 	bx = word ptr [gEmpty]
 	cmp	ax, bx
+	; ax -ne bx label_123 ; cmp and jump
 	jne	@end
 
 	bx = word ptr [gSize]			; counter
 	bx--					; bx = 15
 	lea	bp, gState
-	bp += bx				; gState[15]
+	add	bp, bx				; gState[15]
 
 @loop1:	cmp	bl, byte ptr [bp]		; 15 == gState[15] ?
 	jne	@end
